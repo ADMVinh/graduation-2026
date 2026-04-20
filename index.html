@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thiệp mời Lễ Tốt Nghiệp 2026 - Cinematic, sang trọng, cảm xúc">
+    <title>Lễ Tốt Nghiệp 2026 • Thiệp Mời Cinematic</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500&display=swap');
+        
+        :root {
+            --gold: #d4af77;
+        }
+        
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Cinematic background */
+        .hero-bg {
+            background: radial-gradient(circle at center, #0a2540 0%, #050505 70%);
+        }
+        
+        /* Flip card 3D */
+        .perspective {
+            perspective: 1200px;
+        }
+        
+        .flip-card {
+            transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+            overflow-y: auto; /* Cho phép cuộn trên màn hình cực nhỏ */
+        }
+        
+        /* Text reveal animation */
+        .reveal-text {
+            opacity: 0;
+            animation: reveal 1.5s forwards;
+        }
+        
+        @keyframes reveal {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Chống vỡ tên dài */
+        #student-name {
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        
+        /* Slow zoom on background elements */
+        .slow-zoom {
+            animation: slowZoom 60s infinite linear;
+        }
+        
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Particle glow */
+        canvas {
+            filter: blur(1px);
+        }
+        
+        /* Luxury gold border */
+        .gold-border {
+            border: 3px solid var(--gold);
+            box-shadow: 
+                0 0 20px -5px rgb(212 175 119),
+                0 0 40px -10px rgb(212 175 119);
+        }
+        
+        /* Mobile friendly adjustments */
+        @media (max-width: 768px) {
+            .card-container {
+                width: 92% !important;
+                max-width: 380px !important;
+            }
+            .flip-card {
+                aspect-ratio: auto !important;
+                min-height: 580px; /* Ép chiều cao tối thiểu để chứa đủ nội dung */
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#050505] text-white overflow-x-hidden">
+    <section id="hero" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        
+        <canvas id="particles" class="absolute inset-0 pointer-events-none z-0"></canvas>
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/30 to-[#050505]/90 z-10"></div>
+        
+        <div class="relative z-20 text-center px-6 max-w-4xl mx-auto">
+            
+            <div class="flex justify-center mb-8">
+                <div class="w-24 h-24 md:w-28 md:h-28 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/20 rotate-12 hover:rotate-0 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 md:w-20 md:h-20 text-[#d4af77]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18 9.246 18 10.832 18.477 12 19.253zm0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18 14.754 18 13.168 18.477 12 19.253z" />
+                    </svg>
+                </div>
+            </div>
+            
+            <h1 class="heading-font text-5xl md:text-8xl font-bold tracking-tight text-[#d4af77] reveal-text" style="animation-delay: 400ms;">
+                LỄ TỐT NGHIỆP
+            </h1>
+            <h2 class="heading-font text-4xl md:text-6xl font-medium text-white/90 mt-2 reveal-text" style="animation-delay: 900ms;">
+                2026
+            </h2>
+            
+            <p class="mt-6 md:mt-8 text-xl md:text-3xl text-white/80 max-w-lg mx-auto leading-tight reveal-text" style="animation-delay: 1400ms;">
+                Một chặng đường khép lại.<br>
+                <span class="text-[#d4af77]">Hành trình mới bắt đầu.</span>
+            </p>
+            
+            <div id="countdown" class="mt-10 md:mt-12 inline-flex items-center gap-x-4 md:gap-x-8 bg-white/10 backdrop-blur-2xl px-4 md:px-8 py-4 rounded-3xl border border-white/10 reveal-text" style="animation-delay: 1900ms;">
+                <div class="text-center">
+                    <div id="days" class="text-3xl md:text-4xl font-semibold text-[#d4af77]">—</div>
+                    <div class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Ngày</div>
+                </div>
+                <div class="h-6 md:h-8 w-px bg-white/20"></div>
+                <div class="text-center">
+                    <div id="hours" class="text-3xl md:text-4xl font-semibold text-[#d4af77]">—</div>
+                    <div class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Giờ</div>
+                </div>
+                <div class="h-6 md:h-8 w-px bg-white/20"></div>
+                <div class="text-center">
+                    <div id="minutes" class="text-3xl md:text-4xl font-semibold text-[#d4af77]">—</div>
+                    <div class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Phút</div>
+                </div>
+                <div class="h-6 md:h-8 w-px bg-white/20"></div>
+                <div class="text-center">
+                    <div id="seconds" class="text-3xl md:text-4xl font-semibold text-[#d4af77]">—</div>
+                    <div class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mt-1">Giây</div>
+                </div>
+            </div>
+            
+            <button onclick="openInvitation()" 
+                    class="mt-12 md:mt-16 group relative inline-flex items-center justify-center px-10 md:px-14 py-4 md:py-6 text-lg md:text-xl font-medium bg-[#d4af77] hover:bg-white text-[#0a2540] rounded-2xl overflow-hidden shadow-2xl shadow-[#d4af77]/50">
+                <span class="relative z-10 flex items-center gap-x-3">
+                    MỞ THIỆP MỜI 
+                    <span class="text-2xl md:text-3xl group-active:rotate-12 transition-transform">→</span>
+                </span>
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-150%] group-hover:translate-x-[150%] transition-transform duration-700"></div>
+            </button>
+            
+            <p class="text-white/40 text-xs md:text-sm mt-8 flex items-center justify-center gap-x-2">
+                <span class="w-2 h-2 bg-[#d4af77] rounded-full animate-pulse"></span>
+                Cuộn xuống hoặc nhấn để trải nghiệm cinematic
+            </p>
+        </div>
+        
+        <div onclick="toggleMusic()" id="music-toggle"
+             class="fixed top-6 right-6 md:top-8 md:right-8 z-50 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-[#d4af77] hover:text-[#0a2540] backdrop-blur-xl rounded-xl md:rounded-2xl cursor-pointer border border-white/20">
+            <svg id="music-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 6l12-3M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+        </div>
+        
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[sweep_8s_linear_infinite] pointer-events-none z-10" 
+             style="animation: sweep 8s linear infinite;"></div>
+    </section>
+    
+    <section id="invitation-section" class="min-h-screen py-10 md:py-20 bg-[#050505] hidden">
+        <div class="max-w-5xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-8 md:mb-12">
+                <div class="inline-flex items-center gap-x-3 bg-white/10 text-[#d4af77] px-4 md:px-6 py-2 rounded-3xl text-xs md:text-sm font-medium tracking-widest">
+                    <div class="w-2 h-2 rounded-full bg-[#d4af77] animate-pulse"></div>
+                    THIỆP MỜI CHÍNH THỨC
+                </div>
+            </div>
+            
+            <div class="perspective flex justify-center card-container mx-auto" style="max-width: 620px;">
+                <div id="flip-card" class="flip-card w-full max-w-[620px] min-h-[580px] md:min-h-0 md:aspect-[1.45/1] bg-transparent cursor-pointer rounded-3xl gold-border" onclick="if(!this.classList.contains('flipped')) flipCard()">
+                    
+                    <div class="flip-card-front absolute inset-0 bg-gradient-to-br from-[#0a2540] to-[#050505] rounded-3xl flex flex-col items-center justify-center overflow-hidden">
+                        <div class="text-center px-4">
+                            <div class="text-[#d4af77] text-6xl md:text-8xl mb-4 md:mb-6">🎓</div>
+                            <h1 class="heading-font text-3xl md:text-5xl font-bold text-white">LỄ TỐT NGHIỆP</h1>
+                            <p class="text-xl md:text-2xl text-[#d4af77] mt-1">2026</p>
+                            
+                            <div class="mt-8 md:mt-12 text-white/70 text-base md:text-lg flex flex-col md:flex-row items-center justify-center gap-y-4 gap-x-8">
+                                <div class="flex items-center">
+                                    <span class="text-3xl md:text-4xl">📜</span>
+                                </div>
+                                <div>
+                                    <p class="uppercase text-[10px] md:text-xs tracking-[2px]">Nhấn để mở thiệp</p>
+                                    <!-- <p class="text-[#d4af77] font-medium text-sm md:text-base">Cảm giác như phim điện ảnh</p> -->
+                                </div>
+                            </div>
+                            
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#d4af77]/20 to-transparent opacity-0 group-hover:opacity-100 pointer-events-none" style="animation: lightSweep 4s linear infinite;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flip-card-back absolute inset-0 bg-gradient-to-br from-[#0a2540] to-[#050505] rounded-3xl p-6 md:p-12 flex flex-col justify-between shadow-2xl">
+                        
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h2 class="heading-font text-4xl md:text-6xl leading-none font-bold text-[#d4af77]">Lễ Tốt Nghiệp</h2>
+                                    <p class="text-2xl md:text-4xl text-white/90 mt-1">2026</p>
+                                </div>
+                                <div class="text-right hidden md:block">
+                                    <div class="text-[#d4af77] text-5xl md:text-6xl">🎓</div>
+                                </div>
+                            </div>
+                            
+                            <p class="mt-4 md:mt-8 text-lg md:text-2xl text-white/80 leading-tight max-w-sm">
+                                Một chặng đường khép lại,<br>
+                                <span class="text-[#d4af77]">hành trình mới bắt đầu.</span>
+                            </p>
+                            
+                            <div class="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-base md:text-lg">
+                                <div>
+                                    <div class="uppercase text-[10px] md:text-xs text-white/50 mb-1 md:mb-2 tracking-widest">Sinh viên</div>
+                                    <p id="student-name" class="text-2xl md:text-3xl font-semibold text-white">Nguyễn Quang Vinh</p>
+                                </div>
+                                <div>
+                                    <div class="uppercase text-[10px] md:text-xs text-white/50 mb-1 md:mb-2 tracking-widest">Thời gian</div>
+                                    <p id="date-time" class="text-xl md:text-3xl font-semibold text-white">23 tháng 4, 2026 • 08:00</p>
+                                </div>
+                                
+                                <div class="col-span-1 md:col-span-2">
+                                    <div class="uppercase text-[10px] md:text-xs text-white/50 mb-1 md:mb-2 tracking-widest">Địa điểm</div>
+                                    <p id="location" class="text-lg md:text-2xl font-medium text-white">Hội trường A, Đại học Vinh, Nghệ An</p>
+                                </div>
+                                
+                                <div class="hidden md:block">
+                                    <div class="uppercase text-xs text-white/50 mb-2 tracking-widest">Người tham dự</div>
+                                    <p class="text-xl text-white/90">Gia đình • Bạn bè • Giảng viên</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-4 md:gap-6 mt-6 md:mt-auto pt-6 md:pt-8 border-t border-white/10">
+                            <button onclick="rsvpConfirm(event)" 
+                                    class="w-full md:w-auto bg-[#d4af77] text-[#0a2540] hover:shadow-2xl hover:shadow-[#d4af77]/50 font-semibold text-base md:text-xl px-6 md:px-10 py-4 md:py-6 rounded-2xl flex items-center justify-center gap-x-3">
+                                <span>XÁC NHẬN THAM DỰ</span>
+                                <span class="text-2xl md:text-3xl">→</span>
+                            </button>
+                            
+                            <div class="flex flex-row md:flex-col items-center gap-4 md:gap-0">
+                                <p class="text-[10px] md:text-xs uppercase tracking-widest text-white/60 mb-0 md:mb-3 hidden md:block">Quét QR để xác nhận</p>
+                                <img id="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://graduation-2026.example.com/rsvp?student=NguyenQuangVinh&event=2026" 
+                                     alt="QR Code xác nhận" class="w-16 h-16 md:w-[120px] md:h-[120px] rounded-xl shadow-inner border border-white/10">
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="text-center text-[#d4af77]/70 text-[10px] md:text-xs mt-6">Được thiết kế với tình yêu • Cinematic Edition</div> -->
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-white/40 text-xs md:text-sm mt-8">Nhấn vào thiệp để lật mở • Hiệu ứng 3D cinematic</p>
+        </div>
+    </section>
+    
+    <section class="py-12 md:py-20 bg-gradient-to-b from-[#050505] to-[#0a2540]">
+        <div class="max-w-6xl mx-auto px-4 md:px-6">
+            <h2 class="heading-font text-3xl md:text-4xl text-center mb-2 md:mb-4">Những khoảnh khắc đáng nhớ</h2>
+            <p class="text-center text-white/60 text-sm md:text-base mb-8 md:mb-12">Hành trình 4 năm • Tự hào là một phần của bạn</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <div class="aspect-square rounded-2xl md:rounded-3xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/id/1015/800/800" alt="Kỷ niệm tốt nghiệp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 md:p-6">
+                        <p class="text-white text-xs md:text-sm">Ngày bảo vệ đồ án</p>
+                    </div>
+                </div>
+                <div class="aspect-square rounded-2xl md:rounded-3xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/id/1005/800/800" alt="Kỷ niệm tốt nghiệp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 md:p-6">
+                        <p class="text-white text-xs md:text-sm">Thực tập sinh</p>
+                    </div>
+                </div>
+                <div class="aspect-square rounded-2xl md:rounded-3xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/id/133/800/800" alt="Kỷ niệm tốt nghiệp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 md:p-6">
+                        <p class="text-white text-xs md:text-sm">Bạn bè cùng lớp</p>
+                    </div>
+                </div>
+                <div class="aspect-square rounded-2xl md:rounded-3xl overflow-hidden relative group">
+                    <img src="https://picsum.photos/id/201/800/800" alt="Kỷ niệm tốt nghiệp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 md:p-6">
+                        <p class="text-white text-xs md:text-sm">Khoảnh khắc nhận bằng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-black py-8 md:py-12 text-center text-white/40 text-xs md:text-sm px-4">
+        <p>Made with ❤️ cho ngày trọng đại của bạn • Deploy dễ dàng trên Vercel / Netlify / GitHub Pages</p>
+        <p class="mt-2">Chỉnh sửa nội dung chỉ trong 30 giây bằng cách thay đổi biến JS bên dưới code</p>
+    </footer>
+    
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-18.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // ==================== DỄ CHỈNH SỬA - THÔNG TIN CÁ NHÂN ====================
+        const GRADUATION_DATA = {
+            studentName: "Nguyễn Quang Vinh",          // Đã cập nhật tên chính xác
+            date: "ngày 23 tháng 4, 2026",
+            time: "08:00",
+            fullDateTime: "2026-04-23T08:00:00",      
+            location: "Hội trường A, Đại học Vinh, Nghệ An",
+            rsvpLink: "https://graduation-2026.example.com/rsvp?student=NguyenQuangVinh" 
+        }
+        
+        // ==================== TAILWIND CONFIG ====================
+        function initializeTailwind() {
+            return {
+                config(userConfig = {}) {
+                    return {
+                        configUser: userConfig,
+                        theme: {
+                            extend: {
+                                colors: {
+                                    gold: '#d4af77',
+                                    navy: '#0a2540'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        // ==================== PARTICLES CINEMATIC ====================
+        let particlesArray = []
+        const canvas = document.getElementById('particles')
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width
+                this.y = Math.random() * canvas.height
+                this.size = Math.random() * 5 + 1
+                this.speedX = Math.random() * 0.5 - 0.25
+                this.speedY = Math.random() * 0.5 - 0.25
+                this.color = Math.random() > 0.7 ? '#d4af77' : '#ffffff'
+                this.opacity = Math.random()
+                this.twinkleSpeed = Math.random() * 0.03 + 0.01
+            }
+            
+            update() {
+                this.x += this.speedX
+                this.y += this.speedY
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+                this.opacity = Math.sin(Date.now() * this.twinkleSpeed) * 0.5 + 0.5
+            }
+            
+            draw() {
+                const ctx = canvas.getContext('2d')
+                ctx.save()
+                ctx.globalAlpha = this.opacity
+                ctx.fillStyle = this.color
+                ctx.shadowBlur = 15
+                ctx.shadowColor = this.color
+                ctx.beginPath()
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+                ctx.fill()
+                ctx.restore()
+            }
+        }
+        
+        function initParticles() {
+            particlesArray = []
+            const numberOfParticles = window.innerWidth < 768 ? 50 : 120
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle())
+            }
+        }
+        
+        function animateParticles() {
+            const ctx = canvas.getContext('2d')
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update()
+                particlesArray[i].draw()
+            }
+            
+            ctx.save()
+            ctx.globalAlpha = 0.15
+            for (let i = 0; i < 8; i++) {
+                const p = particlesArray[i % particlesArray.length]
+                ctx.shadowBlur = 40
+                ctx.shadowColor = '#d4af77'
+                ctx.beginPath()
+                ctx.arc(p.x, p.y, p.size * 3.5, 0, Math.PI * 2)
+                ctx.fillStyle = '#d4af77'
+                ctx.fill()
+            }
+            ctx.restore()
+            
+            requestAnimationFrame(animateParticles)
+        }
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+            initParticles()
+        }
+        
+        // ==================== FLIP CARD ====================
+        function flipCard() {
+            const card = document.getElementById('flip-card')
+            card.classList.add('flipped')
+            
+            setTimeout(() => {
+                confetti({
+                    particleCount: window.innerWidth < 768 ? 100 : 180,
+                    spread: window.innerWidth < 768 ? 70 : 90,
+                    origin: { y: 0.6 },
+                    colors: ['#d4af77', '#ffffff', '#0a2540']
+                })
+            }, 600)
+        }
+        
+        // ==================== COUNTDOWN ====================
+        function startCountdown() {
+            const targetDate = new Date(GRADUATION_DATA.fullDateTime).getTime()
+            
+            const interval = setInterval(() => {
+                const now = new Date().getTime()
+                const distance = targetDate - now
+                
+                if (distance < 0) {
+                    clearInterval(interval)
+                    document.getElementById('countdown').innerHTML = `<div class="text-[#d4af77] text-2xl md:text-3xl font-bold">ĐÃ ĐẾN NGÀY TỐT NGHIỆP!</div>`
+                    return
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24))
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+                
+                document.getElementById('days').textContent = String(days).padStart(2, '0')
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0')
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0')
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0')
+            }, 1000)
+        }
+        
+        // ==================== MUSIC TOGGLE ====================
+        let isPlaying = false
+        const audio = document.getElementById('bg-music')
+        
+        function toggleMusic() {
+            const icon = document.getElementById('music-icon')
+            if (isPlaying) {
+                audio.pause()
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 6l12-3M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />`
+            } else {
+                audio.play().catch(() => console.log('Autoplay blocked'))
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 01-18 0 9 9 0 0118 0zM9.75 9.75c0 .829-.673 1.5-1.5 1.5M12 9.75c.829 0 1.5-.673 1.5-1.5M15.75 9.75c0 .829-.673 1.5-1.5 1.5" />`
+            }
+            isPlaying = !isPlaying
+        }
+        
+        // ==================== RSVP ====================
+        function rsvpConfirm(e) {
+            e.stopImmediatePropagation()
+            
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.5 },
+                colors: ['#d4af77', '#ffffff']
+            })
+            
+            const thanks = document.createElement('div')
+            thanks.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(10,37,64,0.98); color:#d4af77; padding:24px 32px; border-radius:20px; font-size:18px; box-shadow:0 0 50px -10px #d4af77; z-index:9999; text-align:center; width: 90%; max-width: 400px;'
+            thanks.innerHTML = `
+                <div class="text-4xl mb-3">🎉</div>
+                <div class="font-bold text-xl mb-2">Cảm ơn bạn đã xác nhận!</div>
+                <div class="text-white/90 text-sm">Chúng tôi rất mong được gặp bạn tại ngày trọng đại này.</div>
+            `
+            document.body.appendChild(thanks)
+            
+            setTimeout(() => {
+                thanks.style.transition = 'all 0.5s ease'
+                thanks.style.opacity = '0'
+                thanks.style.transform = 'translate(-50%, -60%)'
+                setTimeout(() => thanks.remove(), 500)
+            }, 3000)
+        }
+        
+        // ==================== MỞ THIỆP TỪ HERO ====================
+        function openInvitation() {
+            const hero = document.getElementById('hero')
+            const section = document.getElementById('invitation-section')
+            
+            hero.style.transition = 'opacity 1s ease'
+            hero.style.opacity = '0'
+            
+            setTimeout(() => {
+                hero.classList.add('hidden')
+                section.classList.remove('hidden')
+                section.style.opacity = '1'
+                section.scrollIntoView({ behavior: 'smooth' })
+                
+                setTimeout(() => {
+                    confetti({ particleCount: 50, spread: 60, origin: { y: 0.3 } })
+                }, 600)
+            }, 1000)
+        }
+        
+        // ==================== KHỞI CHẠY ====================
+        function launchWebsite() {
+            initializeTailwind()
+            resizeCanvas()
+            window.addEventListener('resize', resizeCanvas)
+            animateParticles()
+            
+            document.getElementById('student-name').textContent = GRADUATION_DATA.studentName
+            document.getElementById('date-time').textContent = `${GRADUATION_DATA.date} • ${GRADUATION_DATA.time}`
+            document.getElementById('location').textContent = GRADUATION_DATA.location
+            
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(GRADUATION_DATA.rsvpLink)}`
+            document.getElementById('qr-code').src = qrUrl
+            
+            startCountdown()
+        }
+        
+        window.onload = launchWebsite
+    </script>
+</body>
+</html>
